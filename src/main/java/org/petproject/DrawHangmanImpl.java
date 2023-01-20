@@ -2,12 +2,28 @@ package org.petproject;
 
 public class DrawHangmanImpl implements DrawHangman {
 
-    private int mistakesCounter = 0;
-
     @Override
-    public void drawHangman() {
+    public void drawHangman(int mistakesCounter) {
         if (mistakesCounter == 0) {
             drawEmptyHangman();
+        }
+        if (mistakesCounter == 1) {
+            drawHead();
+        }
+        if (mistakesCounter == 2) {
+            drawBody();
+        }
+        if (mistakesCounter == 3) {
+            drawLeftArm();
+        }
+        if (mistakesCounter == 4) {
+            drawRightArm();
+        }
+        if (mistakesCounter == 5) {
+            drawLeftLeg();
+        }
+        if (mistakesCounter == 6) {
+            drawRightLeg();
         }
     }
 

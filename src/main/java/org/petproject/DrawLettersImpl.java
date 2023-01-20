@@ -5,31 +5,40 @@ import java.util.Map;
 
 public class DrawLettersImpl implements DrawLetters {
 
-    @Override
-    public void drawLetters(String word) {
-        Map<Integer, Character> letters = new HashMap<>();
-
-        for (int i = 0; i < word.length(); i++) {
-            letters.put(i, word.charAt(i));
-        }
-
-        drawEmptyLetters(word);
+    private String word;
+    private final Map<Integer, Character> letters = new HashMap<>();
+    public DrawLettersImpl() {
     }
 
-    private void drawEmptyLetters(String word) {
-        int amountOfEmptyLetters = word.length();
-        System.out.println("");
+    @Override
+    public void drawLetters(Character charToDraw) {
+        for (int i = 0; i < word.length(); i++) {
+            if (word.charAt(i) == charToDraw) {
+                letters.put(i, charToDraw);
+            } else {
+                letters.putIfAbsent(i, ' ');
+            }
+        }
+
+        int amountOfLetterBoxes = word.length();
+        System.out.println(" ");
         System.out.println("Letters: ");
-        for (int i = 0; i < amountOfEmptyLetters; i++) {
+
+        for (int i = 0; i < amountOfLetterBoxes; i++) {
             System.out.print("---  ");
         }
-        System.out.println("");
-        for (int i = 0; i < amountOfEmptyLetters; i++) {
-            System.out.print("| |  ");
+        System.out.println(" ");
+        for (int i = 0; i < amountOfLetterBoxes; i++) {
+            System.out.print("|" + letters.get(i) + "|  ");
         }
-        System.out.println("");
-        for (int i = 0; i < amountOfEmptyLetters; i++) {
+        System.out.println(" ");
+        for (int i = 0; i < amountOfLetterBoxes; i++) {
             System.out.print("---  ");
         }
+        System.out.println(" ");
+    }
+
+    public void setWord(String word) {
+        this.word = word;
     }
 }

@@ -1,5 +1,5 @@
 package org.petproject;
 
 public interface DrawLetters {
-    void drawLetters(String word);
+    void drawLetters(Character charToDraw);
 }

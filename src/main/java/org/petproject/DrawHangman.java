@@ -1,5 +1,5 @@
 package org.petproject;
 
 public interface DrawHangman {
-    void drawHangman();
+    void drawHangman(int mistakesCounter);
 }
