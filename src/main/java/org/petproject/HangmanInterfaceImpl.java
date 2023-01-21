@@ -20,6 +20,7 @@ public class HangmanInterfaceImpl implements HangmanInterface {
         System.out.println();
         System.out.println("Letters: ");
 
+        drawHangman(0);
         drawLetterBox();
     }
 
@@ -47,6 +48,36 @@ public class HangmanInterfaceImpl implements HangmanInterface {
     @Override
     public void exitGame() {
         System.out.println("Exiting");
+    }
+
+    private void drawHangman(int mistakes) {
+        drawHead(mistakes);
+        drawBody(mistakes);
+        drawLegs(mistakes);
+    }
+
+    private void drawHead(int mistakes) {
+
+    }
+    private void drawBody(int mistakes) {
+        drawLeftArm();
+        drawRightArm();
+    }
+    private void drawLeftArm() {
+
+    }
+    private void drawRightArm() {
+
+    }
+    private void drawLegs(int mistakes) {
+        drawLeftLeg();
+        drawRightLeg();
+    }
+    private void drawLeftLeg() {
+
+    }
+    private void drawRightLeg() {
+
     }
 
     private void drawLetterBox() {
