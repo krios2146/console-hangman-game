@@ -25,11 +25,9 @@ public class HangmanGameImpl implements HangmanGame {
         if (personAnswer.equalsIgnoreCase("Y")) {
             prepareGame();
         }
-
         if (personAnswer.equalsIgnoreCase("N")) {
             exitGame();
         }
-
     }
 
     @Override

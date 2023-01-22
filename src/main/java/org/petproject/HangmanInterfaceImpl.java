@@ -21,7 +21,7 @@ public class HangmanInterfaceImpl implements HangmanInterface {
         System.out.println("Letters: ");
 
         drawHangman(0);
-        drawLetterBox();
+        drawLetterBoxes();
     }
 
     @Override
@@ -51,42 +51,70 @@ public class HangmanInterfaceImpl implements HangmanInterface {
     }
 
     private void drawHangman(int mistakes) {
-        drawHead(mistakes);
-        drawBody(mistakes);
-        drawLegs(mistakes);
+        drawHangmanHead(mistakes);
+        drawHangmanBody(mistakes);
+        drawHangmanLegs(mistakes);
     }
 
-    private void drawHead(int mistakes) {
-
-    }
-    private void drawBody(int mistakes) {
-        drawLeftArm();
-        drawRightArm();
-    }
-    private void drawLeftArm() {
-
-    }
-    private void drawRightArm() {
-
-    }
-    private void drawLegs(int mistakes) {
-        drawLeftLeg();
-        drawRightLeg();
-    }
-    private void drawLeftLeg() {
-
-    }
-    private void drawRightLeg() {
-
+    private void drawHangmanHead(int mistakes) {
+        // part of hangman device
+        System.out.println("=======================");
+        System.out.println(" ||              |     ");
+        if (mistakes > 0) {
+            System.out.println(" ||             ***    ");
+            System.out.println(" ||             ***    ");
+        } else {
+            drawHangmanEmptyLine(2);
+        }
     }
 
-    private void drawLetterBox() {
-        drawHorizontalLetterBoxBorder();
-        drawVerticalLetterBoxBorder();
-        drawHorizontalLetterBoxBorder();
+    private void drawHangmanBody(int mistakes) {
+        if (mistakes < 2) {
+            drawHangmanEmptyLine(3);
+        }
+        if (mistakes >= 2) {
+            System.out.println(" ||              |     ");
+            if (mistakes == 2) {
+                System.out.println(" ||              |     ");
+            }
+            if (mistakes == 3) {
+                System.out.println(" ||          ----|     ");
+            }
+            if (mistakes >= 4) {
+                System.out.println(" ||          ----|---- ");
+            }
+            System.out.println(" ||              |     ");
+        }
     }
 
-    private void drawHorizontalLetterBoxBorder() {
+    private void drawHangmanLegs(int mistakes) {
+        if (mistakes < 5) {
+            drawHangmanEmptyLine(2);
+        }
+        if (mistakes == 5) {
+            System.out.println(" ||             /      ");
+            System.out.println(" ||            /       ");
+        }
+        if (mistakes > 5) {
+            System.out.println(" ||             / \\   ");
+            System.out.println(" ||            /   \\  ");
+        }
+        drawHangmanEmptyLine(2);
+    }
+
+    private void drawHangmanEmptyLine(int times) {
+        for (int i = 0; i < times; i++) {
+            System.out.println(" ||                    ");
+        }
+    }
+
+    private void drawLetterBoxes() {
+        drawHorizontalLetterBoxBorders();
+        drawVerticalLetterBoxBorders();
+        drawHorizontalLetterBoxBorders();
+    }
+
+    private void drawHorizontalLetterBoxBorders() {
         for (int i = 0; i < amountOfLettersInWord; i++) {
             System.out.print("---  ");
             if (i == amountOfLettersInWord) {
@@ -96,7 +124,7 @@ public class HangmanInterfaceImpl implements HangmanInterface {
         }
     }
 
-    private void drawVerticalLetterBoxBorder() {
+    private void drawVerticalLetterBoxBorders() {
         for (int i = 0; i < amountOfLettersInWord; i++) {
             System.out.print("| |  ");
             if (i == amountOfLettersInWord) {
