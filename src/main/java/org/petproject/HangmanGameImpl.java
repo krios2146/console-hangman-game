@@ -9,14 +9,10 @@ public class HangmanGameImpl implements HangmanGame {
     private final ArrayList<String> words = new ArrayList<>(Arrays.asList("avavia", "arera", "pathixile", "mirrror"));
 
     private String hiddenWord;
-
-    private int mistakesCounter = 0;
-
-    private boolean isPlayerWin = false;
-    private boolean isPlayerLose = false;
-
-    private final Map<Integer, Character> letters = new HashMap<>();
-    private final List<String> suggestedLetters = new ArrayList<>();
+    private int mistakesCounter;
+    private boolean isPlayerLose;
+    private Map<Integer, Character> lettersIndices;
+    private List<Character> suggestedLetters = new ArrayList<>();
 
     @Override
     public void initiateGame() {
@@ -32,43 +28,34 @@ public class HangmanGameImpl implements HangmanGame {
 
     @Override
     public void playGame() {
-        hangmanInterface.drawInterface(hiddenWord);
+        String suggestedLetter = hangmanInterface.askLetter();
 
-        for (int i = 0; i < word.length(); i++) {
-            if (word.charAt(i) == charToDraw) {
-                letters.put(i, charToDraw);
-            }
+        if (hiddenWord.contains(suggestedLetter)) {
+            refreshIndicesMap(suggestedLetter.charAt(0));
+        }
+        if (!hiddenWord.contains(suggestedLetter)) {
+            mistakesCounter++;
         }
 
-        if (letters.size() == word.length()) {
-            isPlayerWin = true;
+        hangmanInterface.drawInterface(mistakesCounter);
+
+        if (mistakesCounter == 6) {
+            isPlayerLose = true;
+            endGame(isPlayerLose);
         }
 
-        drawHangman.drawHangman(mistakesCounter);
-
-        drawLetters.drawLetters(' ');
-        while (!isPlayerLose) {
-            while (suggestedLetters.contains(suggestedLetter)) {
-                System.out.println("You're already suggest this letter, try the new one");
-                suggestedLetter = String.valueOf(input.nextLine().charAt(0));
-            }
-            suggestedLetters.add(suggestedLetter);
-
-            if (!word.contains(suggestedLetter)) {
-                mistakesCounter++;
-            }
-            drawHangman.drawHangman(mistakesCounter);
-            drawLetters.drawLetters(suggestedLetter.charAt(0));
-            if (mistakesCounter == 6) {
-                isPlayerLose = true;
-                System.out.println("You're lost");
-            }
+        // win
+        if (lettersIndices.size() == hiddenWord.length()) {
+            endGame(isPlayerLose);
         }
+
+        playGame();
     }
 
     @Override
-    public void endGame() {
-        hangmanInterface.endGame();
+    public void endGame(boolean isPlayerLose) {
+        hangmanInterface.endGame(isPlayerLose);
+        initiateGame();
     }
 
     @Override
@@ -76,10 +63,29 @@ public class HangmanGameImpl implements HangmanGame {
         hangmanInterface.exitGame();
     }
 
+    private void refreshIndicesMap(Character letter) {
+        for (int i = 0; i < hiddenWord.length(); i++) {
+            if (hiddenWord.charAt(i) == letter) {
+                lettersIndices.put(i, letter);
+            }
+        }
+        hangmanInterface.setLettersIndexes(lettersIndices);
+    }
+
     private void prepareGame() {
+        // refresh class variables
         int randomNumber = new Random().nextInt(0, words.size());
         hiddenWord = words.get(randomNumber);
-        hangmanInterface.drawInterface(hiddenWord);
+        isPlayerLose = false;
+        mistakesCounter = 0;
+        lettersIndices = new HashMap<>();
+
+        // initial variables setup
+        hangmanInterface.setHiddenWord(hiddenWord);
+        hangmanInterface.setLettersIndexes(lettersIndices);
+
+        hangmanInterface.drawInterface(mistakesCounter);
+
         playGame();
     }
 }

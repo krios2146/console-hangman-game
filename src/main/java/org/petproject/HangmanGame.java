@@ -7,5 +7,5 @@ public interface HangmanGame {
 
     void exitGame();
 
-    void endGame();
+    void endGame(boolean isPlayerLose);
 }

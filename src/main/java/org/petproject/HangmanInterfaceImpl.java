@@ -1,10 +1,14 @@
 package org.petproject;
 
+import java.util.Map;
 import java.util.Scanner;
 
 public class HangmanInterfaceImpl implements HangmanInterface {
 
-    private int amountOfLettersInWord;
+    private String hiddenWord;
+
+    private Map<Integer, Character> lettersIndexes;
+
     private final Scanner input = new Scanner(System.in);
 
     @Override
@@ -14,24 +18,12 @@ public class HangmanInterfaceImpl implements HangmanInterface {
     }
 
     @Override
-    public void drawInterface(String word) {
-        amountOfLettersInWord = word.length();
-
+    public void drawInterface(int mistakes) {
         System.out.println();
         System.out.println("Letters: ");
 
-        drawHangman(0);
+        drawHangman(mistakes);
         drawLetterBoxes();
-    }
-
-    @Override
-    public void drawInterface(int mistakes) {
-
-    }
-
-    @Override
-    public void drawInterface(Character letter) {
-
     }
 
     @Override
@@ -41,7 +33,14 @@ public class HangmanInterfaceImpl implements HangmanInterface {
     }
 
     @Override
-    public void endGame() {
+    public void endGame(boolean isPlayerLose) {
+        if (isPlayerLose) {
+            System.out.println("You are lost");
+        }
+        if (!isPlayerLose) {
+            System.out.println("You are win");
+        }
+
         System.out.println("Game is over");
     }
 
@@ -115,22 +114,32 @@ public class HangmanInterfaceImpl implements HangmanInterface {
     }
 
     private void drawHorizontalLetterBoxBorders() {
-        for (int i = 0; i < amountOfLettersInWord; i++) {
-            System.out.print("---  ");
-            if (i == amountOfLettersInWord) {
+        for (int i = 0; i < hiddenWord.length(); i++) {
+            if (i == hiddenWord.length() - 1) {
                 System.out.print("---");
                 System.out.println();
+                break;
             }
+            System.out.print("---  ");
         }
     }
 
     private void drawVerticalLetterBoxBorders() {
-        for (int i = 0; i < amountOfLettersInWord; i++) {
-            System.out.print("| |  ");
-            if (i == amountOfLettersInWord) {
-                System.out.print("| |");
+        for (int i = 0; i < hiddenWord.length(); i++) {
+            if (i == hiddenWord.length() - 1) {
+                System.out.print("|" + lettersIndexes.getOrDefault(i, ' ') + "|");
                 System.out.println();
+                break;
             }
+            System.out.print("|" + lettersIndexes.getOrDefault(i, ' ') + "|  ");
         }
+    }
+
+    public void setHiddenWord(String hiddenWord) {
+        this.hiddenWord = hiddenWord;
+    }
+
+    public void setLettersIndexes(Map<Integer, Character> lettersIndexes) {
+        this.lettersIndexes = lettersIndexes;
     }
 }
