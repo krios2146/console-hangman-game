@@ -19,9 +19,6 @@ public class HangmanInterfaceImpl implements HangmanInterface {
 
     @Override
     public void drawInterface(int mistakes) {
-        System.out.println();
-        System.out.println("Letters: ");
-
         drawHangman(mistakes);
         drawLetterBoxes();
     }
@@ -109,6 +106,9 @@ public class HangmanInterfaceImpl implements HangmanInterface {
     }
 
     private void drawLetterBoxes() {
+        System.out.println();
+        System.out.println("Letters: ");
+
         drawHorizontalLetterBoxBorders();
         drawVerticalLetterBoxBorders();
         drawHorizontalLetterBoxBorders();
