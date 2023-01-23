@@ -59,6 +59,7 @@ public class HangmanInterfaceImpl implements HangmanInterface {
         // part of hangman device
         System.out.println("=======================");
         System.out.println(" ||              |     ");
+
         if (mistakes > 0) {
             System.out.println(" ||             ***    ");
             System.out.println(" ||             ***    ");
@@ -141,5 +142,9 @@ public class HangmanInterfaceImpl implements HangmanInterface {
 
     public void setLettersIndexes(Map<Integer, Character> lettersIndexes) {
         this.lettersIndexes = lettersIndexes;
+    }
+
+    public void alreadySuggestedLetterWarning() {
+        System.out.println("You already suggest this letter");
     }
 }

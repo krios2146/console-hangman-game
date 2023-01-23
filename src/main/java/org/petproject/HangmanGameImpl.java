@@ -12,7 +12,7 @@ public class HangmanGameImpl implements HangmanGame {
     private int mistakesCounter;
     private boolean isPlayerLose;
     private Map<Integer, Character> guessedLetters;
-    private Map<Character, Integer> suggestedLetters;
+    private List<Character> previouslySuggestedLetters;
 
     @Override
     public void initiateGame() {
@@ -29,6 +29,13 @@ public class HangmanGameImpl implements HangmanGame {
     @Override
     public void playGame() {
         String suggestedLetter = hangmanInterface.askLetter();
+
+        while (checkIfLetterIsAlreadyBeingUsed(suggestedLetter.charAt(0))) {
+            hangmanInterface.alreadySuggestedLetterWarning();
+            suggestedLetter = hangmanInterface.askLetter();
+        }
+
+        previouslySuggestedLetters.add(suggestedLetter.charAt(0));
 
         if (hiddenWord.contains(suggestedLetter)) {
             refreshGuessedLetters(suggestedLetter.charAt(0));
@@ -72,6 +79,10 @@ public class HangmanGameImpl implements HangmanGame {
         return false;
     }
 
+    private boolean checkIfLetterIsAlreadyBeingUsed(Character letter) {
+        return previouslySuggestedLetters.contains(letter);
+    }
+
     private void refreshGuessedLetters(Character letter) {
         for (int i = 0; i < hiddenWord.length(); i++) {
             if (hiddenWord.charAt(i) == letter) {
@@ -88,6 +99,7 @@ public class HangmanGameImpl implements HangmanGame {
         isPlayerLose = false;
         mistakesCounter = 0;
         guessedLetters = new HashMap<>();
+        previouslySuggestedLetters = new ArrayList<>();
 
         // initial variables setup
         hangmanInterface.setHiddenWord(hiddenWord);
