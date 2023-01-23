@@ -11,8 +11,8 @@ public class HangmanGameImpl implements HangmanGame {
     private String hiddenWord;
     private int mistakesCounter;
     private boolean isPlayerLose;
-    private Map<Integer, Character> lettersIndices;
-    private List<Character> suggestedLetters = new ArrayList<>();
+    private Map<Integer, Character> guessedLetters;
+    private Map<Character, Integer> suggestedLetters;
 
     @Override
     public void initiateGame() {
@@ -31,7 +31,7 @@ public class HangmanGameImpl implements HangmanGame {
         String suggestedLetter = hangmanInterface.askLetter();
 
         if (hiddenWord.contains(suggestedLetter)) {
-            refreshIndicesMap(suggestedLetter.charAt(0));
+            refreshGuessedLetters(suggestedLetter.charAt(0));
         }
         if (!hiddenWord.contains(suggestedLetter)) {
             mistakesCounter++;
@@ -65,20 +65,20 @@ public class HangmanGameImpl implements HangmanGame {
             return true;
         }
         // win
-        if (lettersIndices.size() == hiddenWord.length()) {
+        if (guessedLetters.size() == hiddenWord.length()) {
             endGame(isPlayerLose);
             return true;
         }
         return false;
     }
 
-    private void refreshIndicesMap(Character letter) {
+    private void refreshGuessedLetters(Character letter) {
         for (int i = 0; i < hiddenWord.length(); i++) {
             if (hiddenWord.charAt(i) == letter) {
-                lettersIndices.put(i, letter);
+                guessedLetters.put(i, letter);
             }
         }
-        hangmanInterface.setLettersIndexes(lettersIndices);
+        hangmanInterface.setLettersIndexes(guessedLetters);
     }
 
     private void prepareGame() {
@@ -87,11 +87,11 @@ public class HangmanGameImpl implements HangmanGame {
         hiddenWord = words.get(randomNumber);
         isPlayerLose = false;
         mistakesCounter = 0;
-        lettersIndices = new HashMap<>();
+        guessedLetters = new HashMap<>();
 
         // initial variables setup
         hangmanInterface.setHiddenWord(hiddenWord);
-        hangmanInterface.setLettersIndexes(lettersIndices);
+        hangmanInterface.setLettersIndexes(guessedLetters);
 
         hangmanInterface.drawInterface(mistakesCounter);
 
