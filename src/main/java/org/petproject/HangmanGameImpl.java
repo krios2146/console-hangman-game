@@ -39,17 +39,11 @@ public class HangmanGameImpl implements HangmanGame {
 
         hangmanInterface.drawInterface(mistakesCounter);
 
-        if (mistakesCounter == 6) {
-            isPlayerLose = true;
-            endGame(isPlayerLose);
-        }
+        boolean isGameEnded = checkIfGameIsEnded();
 
-        // win
-        if (lettersIndices.size() == hiddenWord.length()) {
-            endGame(isPlayerLose);
+        if (!isGameEnded) {
+            playGame();
         }
-
-        playGame();
     }
 
     @Override
@@ -61,6 +55,21 @@ public class HangmanGameImpl implements HangmanGame {
     @Override
     public void exitGame() {
         hangmanInterface.exitGame();
+    }
+
+    private boolean checkIfGameIsEnded() {
+        // lose
+        if (mistakesCounter == 6) {
+            isPlayerLose = true;
+            endGame(isPlayerLose);
+            return true;
+        }
+        // win
+        if (lettersIndices.size() == hiddenWord.length()) {
+            endGame(isPlayerLose);
+            return true;
+        }
+        return false;
     }
 
     private void refreshIndicesMap(Character letter) {
