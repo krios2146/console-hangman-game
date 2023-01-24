@@ -6,8 +6,6 @@ public class HangmanGameImpl implements HangmanGame {
 
     private final HangmanInterfaceImpl hangmanInterface = new HangmanInterfaceImpl();
 
-    private final ArrayList<String> words = new ArrayList<>(Arrays.asList("avavia", "arera", "pathixile", "mirrror"));
-
     private String hiddenWord;
     private int mistakesCounter;
     private boolean isPlayerLose;
@@ -93,7 +91,8 @@ public class HangmanGameImpl implements HangmanGame {
     }
 
     private void prepareGame() {
-        // refresh class variables
+        // refresh variables
+        List<String> words = new Dictionary().getWords();
         int randomNumber = new Random().nextInt(0, words.size());
         hiddenWord = words.get(randomNumber);
         isPlayerLose = false;
