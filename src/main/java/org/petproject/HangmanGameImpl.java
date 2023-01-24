@@ -4,13 +4,21 @@ import java.util.*;
 
 public class HangmanGameImpl implements HangmanGame {
 
-    private final HangmanInterfaceImpl hangmanInterface = new HangmanInterfaceImpl();
+    private final HangmanInterfaceImpl hangmanInterface;
 
     private String hiddenWord;
     private int mistakesCounter;
     private boolean isPlayerLose;
     private Map<Integer, Character> guessedLetters;
     private List<Character> previouslySuggestedLetters;
+
+    public HangmanGameImpl() {
+        this.hangmanInterface = new HangmanInterfaceImpl();
+    }
+
+    public HangmanGameImpl(HangmanInterfaceImpl hangmanInterface) {
+        this.hangmanInterface = hangmanInterface;
+    }
 
     @Override
     public void initiateGame() {
