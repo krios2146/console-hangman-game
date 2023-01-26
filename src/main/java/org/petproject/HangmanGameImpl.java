@@ -5,6 +5,7 @@ import java.util.*;
 public class HangmanGameImpl implements HangmanGame {
 
     private final HangmanInterfaceImpl hangmanInterface;
+    private final Dictionary dictionary;
 
     private String hiddenWord;
     private int mistakesCounter;
@@ -14,10 +15,12 @@ public class HangmanGameImpl implements HangmanGame {
 
     public HangmanGameImpl() {
         this.hangmanInterface = new HangmanInterfaceImpl();
+        this.dictionary = new Dictionary();
     }
 
-    public HangmanGameImpl(HangmanInterfaceImpl hangmanInterface) {
+    public HangmanGameImpl(HangmanInterfaceImpl hangmanInterface, Dictionary dictionary) {
         this.hangmanInterface = hangmanInterface;
+        this.dictionary = dictionary;
     }
 
     @Override
@@ -98,7 +101,7 @@ public class HangmanGameImpl implements HangmanGame {
 
     private void prepareGame() {
         // refresh variables
-        List<String> words = new Dictionary().getWords();
+        List<String> words = dictionary.getWords();
         int randomNumber = new Random().nextInt(0, words.size());
         setHiddenWord(words.get(randomNumber));
         setPlayerLose(false);
