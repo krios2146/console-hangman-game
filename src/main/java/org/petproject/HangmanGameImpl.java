@@ -118,10 +118,6 @@ public class HangmanGameImpl implements HangmanGame {
         playGame();
     }
 
-    public void setGuessedLetters(Map<Integer, Character> guessedLetters) {
-        this.guessedLetters = guessedLetters;
-    }
-
     public void setHiddenWord(String hiddenWord) {
         this.hiddenWord = hiddenWord;
     }
