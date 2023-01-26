@@ -71,7 +71,7 @@ public class HangmanGameImpl implements HangmanGame {
     private boolean isGameOver() {
         // lose
         if (mistakesCounter == 6) {
-            isPlayerLose = true;
+            setPlayerLose(true);
             endGame(isPlayerLose);
             return true;
         }
@@ -100,9 +100,9 @@ public class HangmanGameImpl implements HangmanGame {
         // refresh variables
         List<String> words = new Dictionary().getWords();
         int randomNumber = new Random().nextInt(0, words.size());
-        hiddenWord = words.get(randomNumber);
-        isPlayerLose = false;
-        mistakesCounter = 0;
+        setHiddenWord(words.get(randomNumber));
+        setPlayerLose(false);
+        setMistakesCounter(0);
         guessedLetters = new HashMap<>();
         previouslySuggestedLetters = new ArrayList<>();
 
@@ -113,5 +113,21 @@ public class HangmanGameImpl implements HangmanGame {
         hangmanInterface.drawInterface(mistakesCounter);
 
         playGame();
+    }
+
+    public void setGuessedLetters(Map<Integer, Character> guessedLetters) {
+        this.guessedLetters = guessedLetters;
+    }
+
+    public void setHiddenWord(String hiddenWord) {
+        this.hiddenWord = hiddenWord;
+    }
+
+    public void setMistakesCounter(int mistakesCounter) {
+        this.mistakesCounter = mistakesCounter;
+    }
+
+    public void setPlayerLose(boolean playerLose) {
+        isPlayerLose = playerLose;
     }
 }
