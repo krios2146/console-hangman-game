@@ -36,7 +36,7 @@ public class HangmanGameImpl implements HangmanGame {
     public void playGame() {
         String suggestedLetter = hangmanInterface.askLetter();
 
-        while (checkIfLetterIsAlreadyBeingUsed(suggestedLetter.charAt(0))) {
+        while (isLetterAlreadyBeingUsed(suggestedLetter.charAt(0))) {
             hangmanInterface.alreadySuggestedLetterWarning();
             suggestedLetter = hangmanInterface.askLetter();
         }
@@ -52,9 +52,7 @@ public class HangmanGameImpl implements HangmanGame {
 
         hangmanInterface.drawInterface(mistakesCounter);
 
-        boolean isGameEnded = checkIfGameIsEnded();
-
-        if (!isGameEnded) {
+        if (!isGameOver()) {
             playGame();
         }
     }
@@ -70,7 +68,7 @@ public class HangmanGameImpl implements HangmanGame {
         hangmanInterface.exitGame();
     }
 
-    private boolean checkIfGameIsEnded() {
+    private boolean isGameOver() {
         // lose
         if (mistakesCounter == 6) {
             isPlayerLose = true;
@@ -85,7 +83,7 @@ public class HangmanGameImpl implements HangmanGame {
         return false;
     }
 
-    private boolean checkIfLetterIsAlreadyBeingUsed(Character letter) {
+    private boolean isLetterAlreadyBeingUsed(Character letter) {
         return previouslySuggestedLetters.contains(letter);
     }
 
